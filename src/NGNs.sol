@@ -78,7 +78,7 @@ contract NGNs is Initializable, AccessControlUpgradeable, UUPSUpgradeable, ERC20
     // --- Token Core Functions ---
     function approve(address spender, uint256 value) public override onlyIfOperational returns (bool) {
         return super.approve(spender, value);
-    } 
+    }
 
     function mint(address account, uint256 amount) public onlyRole(TREASURY_ROLE) onlyIfOperational {
         _mint(account, amount);
