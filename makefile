@@ -10,7 +10,7 @@ FORGE_TEST_MAINNET:
 
 # --- WALLET MANAGEMENT ---
 ADD-KEY:
-	cast wallet import salva_admin --interactive
+	cast wallet import salva_admin --interactive 
 
 # --- DEPLOYMENT ---
 DEPLOY-TO-BASE_MAINNET:
