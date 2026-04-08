@@ -55,6 +55,7 @@ contract NGNs is Initializable, AccessControlUpgradeable, UUPSUpgradeable, ERC20
         __ERC20_init("Salva NGNs", "NGNs");
 
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        _grantRole(TREASURY_ROLE, msg.sender);
         _isOperational = true;
     }
 

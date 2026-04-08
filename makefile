@@ -22,7 +22,7 @@ DEPLOY-TO-BASE_TESTNET:
 # --- ACCESS CONTROL (ROLES) ---
 # Fixed length mismatch by ensuring keccak result is captured correctly
 GRANT-ROLE:
-	cast send ${REGISTRY_CONTRACT_ADDRESS} "grantRole(bytes32,address)" $$(cast keccak "REGISTRAR_ROLE") ${BACKEND_MANAGER_ADDRESS} --rpc-url ${BASE_SEPOLIA_RPC_URL} --account mainKey
+	cast send ${NGN_TOKEN_ADDRESS} "grantRole(bytes32,address)" $$(cast keccak "TREASURY_ROLE") ${BACKEND_MANAGER_ADDRESS} --rpc-url ${BASE_SEPOLIA_RPC_URL} --account mainKey
 
 REVOKE-ROLE:
 	cast send ${NGN_TOKEN_ADDRESS} "revokeRole(bytes32,address)" $$(cast keccak "TREASURY_ROLE") ${BACKEND_MANAGER_ADDRESS} --rpc-url ${BASE_SEPOLIA_RPC_URL} --account mainKey
@@ -35,10 +35,10 @@ RESUME-CONTRACT:
 	cast send ${NGN_TOKEN_ADDRESS} "setOperationalStatus(bool)" true --rpc-url ${BASE_SEPOLIA_RPC_URL} --account mainKey
 
 BURN:
-	cast send ${NGN_TOKEN_ADDRESS} "burnViaAccountAlias(uint128,uint256)" 5265733930 144000e6 --rpc-url ${BASE_SEPOLIA_RPC_URL} --private-key $(BACKEND_PRIVATE_KEY)
+	cast send ${NGN_TOKEN_ADDRESS} "burn(address,uint256)" 0x9bade6469480c4f3c1639b15f7f9f248e4a4f295 1157970e6 --rpc-url https://eth-sepolia.g.alchemy.com/v2/Xw8PCp_3hHh_MOBnHUy6J --private-key $(BACKEND_PRIVATE_KEY)
 
 MINT:
-	cast send ${NGN_TOKEN_ADDRESS} "mintViaAccountAlias(uint128,uint256)" 5265733930 144000e6 --rpc-url ${BASE_SEPOLIA_RPC_URL} --private-key $(BACKEND_PRIVATE_KEY)
+	cast send 0xae7597fa3414Bc94254fA7777663882355ED6Cb7 "mint(address,uint256)" 0xb298626ec29fcecd98d54ba542c6d391d3123cb7 10000000e6 --rpc-url https://base-sepolia.g.alchemy.com/v2/Xw8PCp_3hHh_MOBnHUy6J --private-key $(BACKEND_PRIVATE_KEY)
 
 FREEZE:
 	cast send ${NGN_TOKEN_ADDRESS} "freezeAccountViaAlias(uint128)" 3175982357 --rpc-url ${BASE_SEPOLIA_RPC_URL} --account mainKey
