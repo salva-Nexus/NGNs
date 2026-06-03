@@ -7,11 +7,11 @@ ADD-KEY:
 
 # --- DEPLOYMENT ---
 
-DEPLOY-TO-ETH_MAINNET:
-	forge script script/DeployNGNs.s.sol:DeployNGNs --rpc-url ${ETH_MAINNET_RPC_URL} --account mainKey --broadcast --verify --etherscan-api-key ${ETHERSCAN_API_KEY}
+DEPLOY-TO-BNB_MAINNET:
+	forge script script/DeployNGNs.s.sol:DeployNGNs --rpc-url ${BNB_MAINNET_RPC_URL} --account mainKey --broadcast --verify --etherscan-api-key ${ETHERSCAN_API_KEY}
 
-DEPLOY-TO-ETH_TESTNET:
-	forge script script/DeployNGNs.s.sol:DeployNGNs --rpc-url ${ETH_SEPOLIA_RPC_URL} --account mainKey --broadcast --verify --etherscan-api-key ${ETHERSCAN_API_KEY}
+DEPLOY-TO-BNB_TESTNET:
+	forge script script/DeployNGNs.s.sol:DeployNGNs --rpc-url ${BNB_TESTNET_RPC_URL} --account mainKey --broadcast --verify --etherscan-api-key ${ETHERSCAN_API_KEY}
 
 
 DEPLOY-TO-BASE_MAINNET:
@@ -27,6 +27,9 @@ GRANT-ROLE:
 
 REVOKE-ROLE:
 	cast send 0x78E9917e6A7D7DD2fd3fc031723741F4f755641C "revokeRole(bytes32,address)" $$(cast keccak "TREASURY_ROLE") 0x9Da6C69815A2b9FFe7eE08A0be00EF181881Ad71 --rpc-url ${BASE_MAINNET_RPC_URL} --account mainKey
+
+GRANT-ROLE-BNB-TESTNET:
+	cast send 0x78E9917e6A7D7DD2fd3fc031723741F4f755641C "grantRole(bytes32,address)" $$(cast keccak "TREASURY_ROLE") ${BACKEND_MANAGER_ADDRESS} --rpc-url ${BNB_TESTNET_RPC_URL} --account mainKey
 
 # --- OPERATIONAL STATUS ---
 PAUSE-CONTRACT:

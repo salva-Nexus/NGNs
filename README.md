@@ -45,12 +45,33 @@ Unlike holding volatile assets, NGNs carries **no foreign exchange risk**. Merch
 
 ## Network & Contract
 
-Salva NGNs is deployed on **Base Mainnet** — a secure, low-cost Ethereum Layer 2 network built by Coinbase.
+Salva NGNs is deployed on **Base and BSC Mainnet**
 
 | Detail | Value |
 |---|---|
 | **Network** | Base Mainnet |
 | **Standard** | ERC-20 |
+| **Peg** | 1 NGNs = 1 NGN |
+| **Contract Address** | `0x78E9917e6A7D7DD2fd3fc031723741F4f755641C` |
+
+| Detail | Value |
+|---|---|
+| **Network** | BSC Mainnet |
+| **Standard** | BEP-20 |
+| **Peg** | 1 NGNs = 1 NGN |
+| **Contract Address** | `0xinDev` |
+
+| Detail | Value |
+|---|---|
+| **Network** | Base Testnet |
+| **Standard** | ERC-20 |
+| **Peg** | 1 NGNs = 1 NGN |
+| **Contract Address** | `0xae7597fa3414Bc94254fA7777663882355ED6Cb7` |
+
+| Detail | Value |
+|---|---|
+| **Network** | BSC Testnet |
+| **Standard** | Bep-20 |
 | **Peg** | 1 NGNs = 1 NGN |
 | **Contract Address** | `0x78E9917e6A7D7DD2fd3fc031723741F4f755641C` |
 
@@ -74,3 +95,4 @@ These guardrails ensure that digital storefronts and businesses running on Salva
 
 - 🌐 [salva-nexus.org](https://salva-nexus.org)
 - 🔍 [View Contract on Basescan](https://basescan.org/token/0x78E9917e6A7D7DD2fd3fc031723741F4f755641C)
+- 🔍 [View Contract on Bscscan](https://bscscan.com/address/0xInDev)
