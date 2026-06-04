@@ -22,11 +22,14 @@ DEPLOY-TO-BASE_TESTNET:
 
 # --- ACCESS CONTROL (ROLES) ---
 # Fixed length mismatch by ensuring keccak result is captured correctly
-GRANT-ROLE:
+GRANT-ROLE-BASE-TESTNET:
 	cast send 0x78E9917e6A7D7DD2fd3fc031723741F4f755641C "grantRole(bytes32,address)" $$(cast keccak "TREASURY_ROLE") ${BACKEND_MANAGER_ADDRESS} --rpc-url ${BASE_MAINNET_RPC_URL} --account mainKey
 
-REVOKE-ROLE:
-	cast send 0x78E9917e6A7D7DD2fd3fc031723741F4f755641C "revokeRole(bytes32,address)" $$(cast keccak "TREASURY_ROLE") 0x9Da6C69815A2b9FFe7eE08A0be00EF181881Ad71 --rpc-url ${BASE_MAINNET_RPC_URL} --account mainKey
+REVOKE-ROLE-BASE-TESTNET:
+	cast send 0xae7597fa3414Bc94254fA7777663882355ED6Cb7 "revokeRole(bytes32,address)" $$(cast keccak "TREASURY_ROLE") 0x9Da6C69815A2b9FFe7eE08A0be00EF181881Ad71 --rpc-url ${BASE_MAINNET_RPC_URL} --account mainKey
+
+GRANT-ROLE-BNB-MAINNET:
+	cast send 0x78E9917e6A7D7DD2fd3fc031723741F4f755641C "grantRole(bytes32,address)" $$(cast keccak "TREASURY_ROLE") 0x9Da6C69815A2b9FFe7eE08A0be00EF181881Ad71 --rpc-url ${BNB_MAINNET_RPC_URL} --account mainKey
 
 GRANT-ROLE-BNB-TESTNET:
 	cast send 0x78E9917e6A7D7DD2fd3fc031723741F4f755641C "grantRole(bytes32,address)" $$(cast keccak "TREASURY_ROLE") ${BACKEND_MANAGER_ADDRESS} --rpc-url ${BNB_TESTNET_RPC_URL} --account mainKey

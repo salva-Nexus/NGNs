@@ -59,7 +59,7 @@ Salva NGNs is deployed on **Base and BSC Mainnet**
 | **Network** | BSC Mainnet |
 | **Standard** | BEP-20 |
 | **Peg** | 1 NGNs = 1 NGN |
-| **Contract Address** | `0xinDev` |
+| **Contract Address** | `0x78E9917e6A7D7DD2fd3fc031723741F4f755641C` |
 
 | Detail | Value |
 |---|---|
@@ -95,4 +95,4 @@ These guardrails ensure that digital storefronts and businesses running on Salva
 
 - 🌐 [salva-nexus.org](https://salva-nexus.org)
 - 🔍 [View Contract on Basescan](https://basescan.org/token/0x78E9917e6A7D7DD2fd3fc031723741F4f755641C)
-- 🔍 [View Contract on Bscscan](https://bscscan.com/address/0xInDev)
+- 🔍 [View Contract on Bscscan](https://bscscan.com/address/0x78E9917e6A7D7DD2fd3fc031723741F4f755641C)
