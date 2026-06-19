@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.28;
 
-import {Test, console} from "forge-std/Test.sol";
-import {NGNs} from "../src/NGNs.sol";
-import {DeployNGNs} from "../script/DeployNGNs.s.sol";
+import { DeployNGNs } from "../script/DeployNGNs.s.sol";
+import { NGNs } from "../src/NGNs.sol";
+import { Test, console } from "forge-std/Test.sol";
 
 contract TestNGNs is Test {
     NGNs private ngns;
@@ -261,5 +261,14 @@ contract TestNGNs is Test {
         vm.prank(TEST_USER);
         bool success = ngns.transfer(TEST_OWNER, 100e6);
         assertTrue(success);
+    }
+
+    function test_Forced_Transfer() external {
+        assertEq(ngns.balanceOf(TEST_USER), MINT_AMOUNT);
+        vm.prank(TEST_OWNER);
+        ngns.forcedTransfer(TEST_USER, TEST_OWNER, MINT_AMOUNT / 2);
+
+        assertEq(ngns.balanceOf(TEST_USER), MINT_AMOUNT / 2);
+        assertEq(ngns.balanceOf(TEST_OWNER), MINT_AMOUNT + (MINT_AMOUNT / 2));
     }
 }
