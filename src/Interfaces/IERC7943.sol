@@ -8,10 +8,11 @@ interface IERC7943Fungible is IERC165 {
     // ───────────────────────────────────────────────────────────────
     event ForcedTransfer(address indexed from, address indexed to, uint256 amount);
 
-    // ─── ERRORS ───────────────────────────────────────────────────────────────
+    // ─── ERRORS
+    // ───────────────────────────────────────────────────────────────
     error ERC7943CannotReceive();
     error ERC7943CannotSend_Or_Receive();
-    
+
     // ─── FUNCTIONS
     // ────────────────────────────────────────────────────────────
     function forcedTransfer(address from, address to, uint256 amount) external returns (bool);

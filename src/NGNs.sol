@@ -2,7 +2,9 @@
 pragma solidity ^0.8.28;
 
 import { IERC7943Fungible } from "./Interfaces/IERC7943.sol";
-import { AccessControlUpgradeable } from "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
+import {
+    AccessControlUpgradeable
+} from "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
 import { Initializable } from "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import { UUPSUpgradeable } from "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 import { ERC20Upgradeable } from "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
@@ -36,12 +38,14 @@ contract NGNs is
     ERC20Upgradeable,
     IERC7943Fungible
 {
-    // ─── ROLES ────────────────────────────────────────────────────────────────
+    // ─── ROLES
+    // ────────────────────────────────────────────────────────────────
 
     /// @notice Role granted to the treasury — can mint, burn, and force transfer.
     bytes32 public constant TREASURY_ROLE = keccak256("TREASURY_ROLE");
 
-    // ─── STATE ────────────────────────────────────────────────────────────────
+    // ─── STATE
+    // ────────────────────────────────────────────────────────────────
 
     /// @dev Global circuit breaker. When false, all token operations are halted
     ///      except for DEFAULT_ADMIN_ROLE holders.
@@ -53,7 +57,8 @@ contract NGNs is
     /// @dev Storage gap for future upgrades — preserves storage layout across versions.
     uint256[50] private __gap;
 
-    // ─── EVENTS ───────────────────────────────────────────────────────────────
+    // ─── EVENTS
+    // ───────────────────────────────────────────────────────────────
 
     /// @notice Emitted when the operational status of the contract changes.
     /// @param status True if operational, false if paused.
@@ -67,7 +72,8 @@ contract NGNs is
     /// @param wallet The address that was unfrozen.
     event AccountUnfrozen(address indexed wallet);
 
-    // ─── ERRORS ───────────────────────────────────────────────────────────────
+    // ─── ERRORS
+    // ───────────────────────────────────────────────────────────────
 
     /// @notice Thrown when an operation is attempted while the contract is paused.
     error NotOperational();
@@ -76,7 +82,8 @@ contract NGNs is
     ///         or when a transfer is attempted to/from a blacklisted account.
     error AccountIsFrozen(address wallet);
 
-    // ─── MODIFIERS ────────────────────────────────────────────────────────────
+    // ─── MODIFIERS
+    // ────────────────────────────────────────────────────────────
 
     /**
      * @dev Reverts if the contract is paused, unless the caller holds DEFAULT_ADMIN_ROLE.
@@ -89,14 +96,16 @@ contract NGNs is
         _;
     }
 
-    // ─── CONSTRUCTOR ──────────────────────────────────────────────────────────
+    // ─── CONSTRUCTOR
+    // ──────────────────────────────────────────────────────────
 
     /// @custom:oz-upgrades-unsafe-allow constructor
     constructor() {
         _disableInitializers();
     }
 
-    // ─── INITIALIZER ──────────────────────────────────────────────────────────
+    // ─── INITIALIZER
+    // ──────────────────────────────────────────────────────────
 
     /**
      * @notice Initializes the NGNs contract.
@@ -112,7 +121,8 @@ contract NGNs is
         _isOperational = true;
     }
 
-    // ─── ERC-7943 COMPLIANCE ──────────────────────────────────────────────────
+    // ─── ERC-7943 COMPLIANCE
+    // ──────────────────────────────────────────────────
 
     /**
      * @notice Returns whether an account is eligible to send tokens.
@@ -137,7 +147,8 @@ contract NGNs is
         return !_isBlacklisted[account];
     }
 
-    // ─── ERC-20 OVERRIDES ─────────────────────────────────────────────────────
+    // ─── ERC-20 OVERRIDES
+    // ─────────────────────────────────────────────────────
 
     /**
      * @notice Transfers tokens to a recipient.
@@ -146,12 +157,7 @@ contract NGNs is
      * @param value The amount to transfer.
      * @return True if the transfer succeeded.
      */
-    function transfer(address to, uint256 value)
-        public
-        override
-        onlyIfOperational
-        returns (bool)
-    {
+    function transfer(address to, uint256 value) public override onlyIfOperational returns (bool) {
         if (!canSend(msg.sender) || !canReceive(to)) {
             revert ERC7943CannotSend_Or_Receive();
         }
@@ -185,19 +191,15 @@ contract NGNs is
      * @param value The allowance amount.
      * @return True if the approval succeeded.
      */
-    function approve(address spender, uint256 value)
-        public
-        override
-        onlyIfOperational
-        returns (bool)
-    {
+    function approve(address spender, uint256 value) public override onlyIfOperational returns (bool) {
         if (!canSend(msg.sender) || !canReceive(spender)) {
             revert ERC7943CannotSend_Or_Receive();
         }
         return super.approve(spender, value);
     }
 
-    // ─── ERC-7943 FORCED TRANSFER ─────────────────────────────────────────────
+    // ─── ERC-7943 FORCED TRANSFER
+    // ─────────────────────────────────────────────
 
     /**
      * @notice Forcibly transfers tokens from one address to another.
@@ -222,7 +224,8 @@ contract NGNs is
         return true;
     }
 
-    // ─── TREASURY FUNCTIONS ───────────────────────────────────────────────────
+    // ─── TREASURY FUNCTIONS
+    // ───────────────────────────────────────────────────
 
     /**
      * @notice Mints new NGNs tokens to a recipient.
@@ -231,11 +234,7 @@ contract NGNs is
      * @param to The address to mint tokens to.
      * @param amount The amount to mint (6 decimals).
      */
-    function mint(address to, uint256 amount)
-        public
-        onlyRole(TREASURY_ROLE)
-        onlyIfOperational
-    {
+    function mint(address to, uint256 amount) public onlyRole(TREASURY_ROLE) onlyIfOperational {
         if (!canReceive(to)) revert ERC7943CannotReceive();
         _mint(to, amount);
     }
@@ -247,15 +246,12 @@ contract NGNs is
      * @param account The address to burn tokens from.
      * @param amount The amount to burn (6 decimals).
      */
-    function burn(address account, uint256 amount)
-        public
-        onlyRole(TREASURY_ROLE)
-        onlyIfOperational
-    {
+    function burn(address account, uint256 amount) public onlyRole(TREASURY_ROLE) onlyIfOperational {
         _burn(account, amount);
     }
 
-    // ─── ADMIN FUNCTIONS ──────────────────────────────────────────────────────
+    // ─── ADMIN FUNCTIONS
+    // ──────────────────────────────────────────────────────
 
     /**
      * @notice Sets the operational status of the contract.
@@ -264,10 +260,7 @@ contract NGNs is
      *      Emits {OperationalStatusChanged}.
      * @param operational True to resume operations, false to pause.
      */
-    function setOperationalStatus(bool operational)
-        external
-        onlyRole(DEFAULT_ADMIN_ROLE)
-    {
+    function setOperationalStatus(bool operational) external onlyRole(DEFAULT_ADMIN_ROLE) {
         _isOperational = operational;
         emit OperationalStatusChanged(operational);
     }
@@ -278,10 +271,7 @@ contract NGNs is
      *      be recipients of mints. Emits {AccountFrozen}.
      * @param wallet The address to blacklist.
      */
-    function freezeAccount(address wallet)
-        public
-        onlyRole(DEFAULT_ADMIN_ROLE)
-    {
+    function freezeAccount(address wallet) public onlyRole(DEFAULT_ADMIN_ROLE) {
         _isBlacklisted[wallet] = true;
         emit AccountFrozen(wallet);
     }
@@ -291,15 +281,13 @@ contract NGNs is
      * @dev Restricted to DEFAULT_ADMIN_ROLE. Emits {AccountUnfrozen}.
      * @param wallet The address to remove from the blacklist.
      */
-    function unfreezeAccount(address wallet)
-        public
-        onlyRole(DEFAULT_ADMIN_ROLE)
-    {
+    function unfreezeAccount(address wallet) public onlyRole(DEFAULT_ADMIN_ROLE) {
         _isBlacklisted[wallet] = false;
         emit AccountUnfrozen(wallet);
     }
 
-    // ─── VIEWS ────────────────────────────────────────────────────────────────
+    // ─── VIEWS
+    // ────────────────────────────────────────────────────────────────
 
     /**
      * @notice Returns whether an account is blacklisted.
@@ -339,21 +327,17 @@ contract NGNs is
         override(AccessControlUpgradeable, IERC165)
         returns (bool)
     {
-        return interfaceId == type(IERC7943Fungible).interfaceId
-            || interfaceId == type(IERC20).interfaceId
+        return interfaceId == type(IERC7943Fungible).interfaceId || interfaceId == type(IERC20).interfaceId
             || super.supportsInterface(interfaceId);
     }
 
-    // ─── INTERNAL ─────────────────────────────────────────────────────────────
+    // ─── INTERNAL
+    // ─────────────────────────────────────────────────────────────
 
     /**
      * @dev Authorizes a contract upgrade. Restricted to DEFAULT_ADMIN_ROLE.
      *      Required by UUPSUpgradeable.
      * @param newImplementation The address of the new implementation contract.
      */
-    function _authorizeUpgrade(address newImplementation)
-        internal
-        override
-        onlyRole(DEFAULT_ADMIN_ROLE)
-    { }
+    function _authorizeUpgrade(address newImplementation) internal override onlyRole(DEFAULT_ADMIN_ROLE) { }
 }
