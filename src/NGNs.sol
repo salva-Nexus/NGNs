@@ -319,7 +319,7 @@ contract NGNs is
      * @notice Returns true if this contract implements the given interface.
      * @dev Supports IERC7943Fungible, IERC20, IERC165, and AccessControl interfaces.
      * @param interfaceId The interface identifier to check.
-     * @return True if the interface is supported.
+     * @return True if the interface is supported
      */
     function supportsInterface(bytes4 interfaceId)
         public
