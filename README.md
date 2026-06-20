@@ -21,8 +21,7 @@ Traditional banking infrastructure and peer-to-peer (P2P) trading in Nigeria car
 - Daily transaction limits that block large settlements
 - Delayed transfers and unpredictable confirmation times
 - Manual payment verification with no transparent audit trail
-- Sudden account freezes disrupting business operations
-
+  
 NGNs was purpose-built to eliminate these bottlenecks — turning the Naira into a programmable, internet-native asset that settles in seconds with complete on-chain proof.
 
 ---
