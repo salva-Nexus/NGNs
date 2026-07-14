@@ -42,13 +42,13 @@ RESUME-CONTRACT:
 	cast send ${NGN_TOKEN_ADDRESS} "setOperationalStatus(bool)" true --rpc-url ${BASE_SEPOLIA_RPC_URL} --account mainKey
 
 BURN-MAINNET:
-	cast send 0x78E9917e6A7D7DD2fd3fc031723741F4f755641C "burn(address,uint256)" 0x2250bf1c33977251a9c7b981a6f12f5d9203722d 17050e6 --rpc-url https://base-mainnet.g.alchemy.com/v2/Xw8PCp_3hHh_MOBnHUy6J --private-key $(BACKEND_PRIVATE_KEY)
+	cast send 0x78E9917e6A7D7DD2fd3fc031723741F4f755641C "burn(address,uint256)" 0xcdb14a87f21be2efbde9cc857c056d23a37bce8f 17050e6 --rpc-url https://bnb-mainnet.g.alchemy.com/v2/ --account mainKey
 
 MINT-TESTNET:
 	cast send 0x210E93c6A658569bC4655820B9BcdD163e25fb2D "mint(address,uint256)" 0x29b71e1AC6c11B2455Bf5A4BFC30c6714EC6A2fD 20000e18 --rpc-url ${BNB_TESTNET_RPC_URL} --private-key 15eede1b5e4e834b6cc83913ebfc9aeb37238d0dd8c3556178910a4052edb1f1
 
 MINT-MAINNET:
-	cast send 0x78E9917e6A7D7DD2fd3fc031723741F4f755641C "mint(address,uint256)" 0x854c565648cea8e8fd160a2c784257f9f9698156 17050e6 --rpc-url https://base-mainnet.g.alchemy.com/v2/6BNajqzojJOGGBKndC6FR --private-key $(BACKEND_PRIVATE_KEY)
+	cast send 0x78E9917e6A7D7DD2fd3fc031723741F4f755641C "mint(address,uint256)" 0xcdb14a87f21be2efbde9cc857c056d23a37bce8f 17050e6 --rpc-url https://bnb-mainnet.g.alchemy.com/v2/ --account mainKey
 
 FREEZE:
 	cast send ${NGN_TOKEN_ADDRESS} "freezeAccountViaAlias(uint128)" 3175982357 --rpc-url ${BASE_SEPOLIA_RPC_URL} --account mainKey
